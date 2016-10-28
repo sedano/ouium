@@ -1,10 +1,4 @@
 {
   "name": "ouium",
-  "app_id": "",
-  "proxies": [
-    {
-      "path": "/auth",
-      "proxyUrl": "http://localhost:5858/auth"
-    }
-  ]
+  "app_id": ""
 }

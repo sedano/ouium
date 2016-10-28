@@ -2,8 +2,7 @@ angular.module('ouium')
   .service('AuthService', function ($q, $http, $rootScope) {
     var LOCAL_TOKEN_KEY = 'ouium';
     var API_ENDPOINT = {
-      //   url: 'http://ouium.herokuapp.com/auth'
-      url: 'http://localhost:8100/auth'
+      url: 'http://ouium.herokuapp.com/auth'
     }
     $rootScope.isAuthenticated = false;
     var authToken;
