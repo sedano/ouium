@@ -62,6 +62,17 @@ angular.module('ouium', ['ionic'])
             controllerAs: 'AuthCtrl'
           }
         }
+      })
+
+      .state('app.details', {
+        url: '/signup/details',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/details.html',
+            controller: 'AuthController',
+            controllerAs: 'AuthCtrl'
+          }
+        }
       });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/main');

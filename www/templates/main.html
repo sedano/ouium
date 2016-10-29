@@ -1,9 +1,9 @@
 <ion-view view-title="Ouium">
-  <ion-content>
+  <ion-content padding="true">
     <h1>Welcome</h1>
-    <p>Are you authenticated? {{isAuthenticated}}</p>
-    <button class="button button-positive" ui-sref="app.login" ng-disabled="isAuthenticated">Login</button>
-    <button class="button button-calm" ui-sref="app.signup" ng-disabled="isAuthenticated">Signup</button>
-    <button class="button button-assertive" ng-click="MainCtrl.logout()" ng-disabled="!isAuthenticated">Logout</button>
+    <p>Authenticated: {{isAuthenticated.toString() | uppercase}}</p>
+    <button class="button button-block button-positive" ui-sref="app.login" ng-disabled="isAuthenticated">Login</button>
+    <button class="button button-block button-calm" ui-sref="app.signup" ng-disabled="isAuthenticated">Sign Up</button>
+    <button class="button button-block button-assertive" ng-click="MainCtrl.logout()" ng-disabled="!isAuthenticated">Logout</button>
   </ion-content>
 </ion-view>

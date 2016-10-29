@@ -1,0 +1,37 @@
+<ion-view view-title="User information">
+	<ion-content>
+		<form name="detailsForm" ng-submit="AuthCtrl.updateProfile()">
+			<div class="list">
+				<div class="item item-divider">
+					Personal
+				</div>
+				<label class="item item-input">
+          <span class="input-label">Name</span>
+          <input type="text" ng-model="AuthCtrl.user.name" required>
+        </label>
+				<label class="item item-input">
+          <span class="input-label">Lastname</span>
+          <input type="text" ng-model="AuthCtrl.user.lastname">
+        </label>
+				<div class="item item-divider">
+					Location
+				</div>
+				<label class="item item-input">
+          <span class="input-label" required>City</span>
+          <input type="text" ng-model="AuthCtrl.user.address.address">
+        </label>
+				<label class="item item-input">
+          <span class="input-label" required>Country</span>
+          <input type="text" ng-model="AuthCtrl.user.address.country">
+        </label>
+				<div class="item item-divider">
+					Extra
+				</div>
+				<ion-checkbox ng-model="AuthCtrl.user.address.contractor">I want to offer my service</ion-checkbox>
+				<label class="item">
+          <button class="button button-block button-calm" ng-disabled="detailsForm.$invalid" type="submit">Save details</button>
+        </label>
+			</div>
+		</form>
+	</ion-content>
+</ion-view>

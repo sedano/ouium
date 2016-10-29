@@ -3,6 +3,7 @@ angular.module('ouium')
     var LOCAL_TOKEN_KEY = 'ouium';
     var API_ENDPOINT = {
       url: 'http://ouium.herokuapp.com/auth'
+      // url:'http://localhost:8100/auth'
     }
     $rootScope.isAuthenticated = false;
     var authToken;
@@ -51,7 +52,7 @@ angular.module('ouium')
         $http.post(API_ENDPOINT.url + '/login', user).then(function (result) {
           if (result.data.success) {
             storeUserCredentials(result.data.token);
-            resolve(result.data.msg);
+            resolve(result.data);
           } else {
             reject(result.data.msg);
           }
