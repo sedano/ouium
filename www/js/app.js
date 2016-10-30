@@ -64,11 +64,11 @@ angular.module('ouium', ['ionic'])
         }
       })
 
-      .state('app.details', {
-        url: '/signup/details',
+      .state('app.profile', {
+        url: '/profile',
         views: {
           'menuContent': {
-            templateUrl: 'templates/details.html',
+            templateUrl: 'templates/profile.html',
             controller: 'AuthController',
             controllerAs: 'AuthCtrl'
           }

@@ -1,20 +1,20 @@
 angular.module('ouium')
 
-  .controller('AuthController', function (AuthService, $state, $rootScope, $ionicPopup, $ionicHistory, $ionicLoading, $scope) {
+  .controller('AuthController', function (AuthService, UserService, $state, $rootScope, $ionicPopup, $ionicHistory, $ionicLoading, $scope) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    $scope.$on('$ionicView.enter', function (e) {
-      vm.user = $rootScope.profile;
+    $scope.$on('$ionicView.beforeEnter', function (e) {
+      vm.user = $rootScope.isAuthenticated ? $rootScope.user : {};
     });
     var vm = this;
 
     // Form data for the login view
     vm.login = function () {
       $ionicLoading.show({ hideOnStateChange: true });
-      AuthService.login(vm.user).then(function (data) {
+      AuthService.login(vm.user).then(function () {
         $ionicHistory.goBack();
       }, function (err) {
         $ionicLoading.hide();
@@ -27,29 +27,37 @@ angular.module('ouium')
 
     // Form data for the signup view
     vm.signup = function () {
+      $ionicLoading.show({ hideOnStateChange: true });
       AuthService.signup(vm.user).then(function (msg) {
+        $ionicLoading.hide();
         $ionicPopup.alert({
           title: 'User created!',
           template: msg
         }).then(function (res) {
-          $ionicHistory.nextViewOptions({
-            disableBack: true
-          });
-          $state.go('app.details');
+          vm.login()
         });
-      }, function (errMsg) {
+      }, function (err) {
         $ionicPopup.alert({
           title: 'Sign up failed!',
-          template: errMsg
+          template: err
         });
       });
     };
 
-    vm.updateProfile = function () {
-      $ionicHistory.nextViewOptions({
-        disableBack: true
+    vm.updateProfile = function (user) {
+      UserService.updateUserProfile(user).then(function (msg) {
+        $ionicPopup.alert({
+          title: 'Profile updated!',
+          template: msg
+        }).then(function (res) {
+          $ionicHistory.goBack();
+        });
+      }, function (err) {
+        $ionicPopup.alert({
+          title: 'Profile update failed!',
+          template: err
+        });
       });
-      $state.go('app.main');
     }
-  })
 
+  });

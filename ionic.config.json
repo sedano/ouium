@@ -4,7 +4,11 @@
   "proxies": [
     {
       "path": "/auth",
-      "proxyUrl": "http://ouium.herokuapp.com/auth"
+      "proxyUrl": "http://localhost:5858/auth"
+    },
+    {
+      "path":"/user",
+      "proxyUrl":"http://localhost:5858/user"
     }
   ]
 }
