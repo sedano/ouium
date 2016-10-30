@@ -2,7 +2,7 @@ angular.module('ouium')
   .service('UserService', function ($q, $http, $rootScope) {
     var USER_PROFILE = 'user_profile';
     var API_ENDPOINT = {
-      url: 'http://ouium.herokuapp.com/auth'
+      url: 'http://ouium.herokuapp.com/user'
       // url: 'http://localhost:8100/user'
     }
     $rootScope.user = {};
