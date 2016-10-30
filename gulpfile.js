@@ -49,3 +49,8 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+gulp.task('copy', function() {
+   gulp.src('./platforms/android/build/outputs/apk/android-debug.apk')
+   .pipe(gulp.dest('./dist/apk'));
+});
