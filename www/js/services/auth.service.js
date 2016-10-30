@@ -1,9 +1,10 @@
 angular.module('ouium')
   .service('AuthService', function ($q, $http, $rootScope) {
-    var LOCAL_TOKEN_KEY = 'ouium';
+    var LOCAL_TOKEN_KEY = 'token';
+    var LOCAL_PROFILE = 'profile';
     var API_ENDPOINT = {
-      url: 'http://ouium.herokuapp.com/auth'
-      // url:'http://localhost:8100/auth'
+      // url: 'http://ouium.herokuapp.com/auth'
+      url: 'http://localhost:8100/auth'
     }
     $rootScope.isAuthenticated = false;
     var authToken;
@@ -15,14 +16,15 @@ angular.module('ouium')
       }
     }
 
-    function storeUserCredentials(token) {
-      window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
-      useCredentials(token);
+    function storeUserProfile(data) {
+      window.localStorage.setItem(LOCAL_TOKEN_KEY, data.token);
+      window.localStorage.setItem(LOCAL_PROFILE, JSON.stringify(data.user));
+      useCredentials(data);
     }
 
-    function useCredentials(token) {
+    function useCredentials(data) {
       $rootScope.isAuthenticated = true;
-      authToken = token;
+      authToken = data.token;
 
       // Set the token as header for your requests!
       $http.defaults.headers.common.Authorization = authToken;
@@ -31,6 +33,7 @@ angular.module('ouium')
     function destroyUserCredentials() {
       authToken = undefined;
       $rootScope.isAuthenticated = false;
+      $rootScope.user = undefined;
       $http.defaults.headers.common.Authorization = undefined;
       window.localStorage.clear();
     }
@@ -51,7 +54,8 @@ angular.module('ouium')
       return $q(function (resolve, reject) {
         $http.post(API_ENDPOINT.url + '/login', user).then(function (result) {
           if (result.data.success) {
-            storeUserCredentials(result.data.token);
+            destroyUserCredentials();
+            storeUserProfile(result.data);
             resolve(result.data);
           } else {
             reject(result.data.msg);
@@ -70,7 +74,7 @@ angular.module('ouium')
       login: login,
       signup: signup,
       logout: logout,
-      isAuthenticated: function () { return isAuthenticated; },
+      isAuthenticated: function () { return isAuthenticated; }
     };
   })
 
