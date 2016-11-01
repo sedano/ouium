@@ -64,6 +64,17 @@ angular.module('ouium', ['ionic'])
         }
       })
 
+      .state('app.search', {
+        url: '/search',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/search.html',
+            controller: 'SearchController',
+            controllerAs: 'SearchCtrl'
+          }
+        }
+      })
+
       .state('app.profile', {
         url: '/profile',
         views: {

@@ -1,0 +1,25 @@
+<ion-view view-title="Search">
+	<ion-content>
+		<div class="list list-inset">
+			<form ng-submit="SearchCtrl.search()">
+				<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search" ng-model="query" ng-change="SearchCtrl.clear()">
+				</label>
+			</form>
+		</div>
+		<ion-list can-swipe="listCanSwipe">
+			<div class="item item-divider">
+				Search results
+			</div>
+			<ion-item collection-repeat="item in SearchCtrl.items" class="item-thumbnail-left">
+				<img ng-src="{{item.img}}">
+				<h2>{{item.title}}</h2>
+				<p>{{item.description}}</p>
+				<ion-option-button class="button-positive" ng-click="SearchCtrl.delete(item)">
+					Delete
+				</ion-option-button>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
