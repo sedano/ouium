@@ -87,4 +87,18 @@ angular.module('ouium', ['ionic'])
       });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/main');
+  })
+
+  .filter('capitalize', function () {
+    return function (input) {
+      if (isNaN(input)) {
+        var splitInput = input.toLowerCase().split(' ');
+        for (let i = 0; i < splitInput.length; i++) {
+          splitInput[i] = splitInput[i].charAt(0).toUpperCase() + splitInput[i].substring(1);
+        }
+        return splitInput.join(' ');
+      } else {
+        return input;
+      }
+    }
   });

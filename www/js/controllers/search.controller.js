@@ -9,14 +9,15 @@ angular.module('ouium')
     });
 
     var vm = this;
-
     vm.items = [];
 
     vm.search = function () {
+      //Convert query toLowerCase
+      var query = JSON.stringify(vm.query).toLowerCase();
       console.log("Searching")
       for (let i = 1; i < 101; i++) {
         vm.items.push({
-          img: "https://dummyimage.com/100x100/"+Math.floor(Math.random()*16777215).toString(16)+"/fff&text=" + i,
+          img: "https://dummyimage.com/100x100/" + Math.floor(Math.random() * 16777215).toString(16) + "/fff&text=" + i,
           title: "User " + i,
           description: "I'm user #" + i + " and I'm not a clone"
         });

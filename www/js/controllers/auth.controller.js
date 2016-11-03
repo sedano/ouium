@@ -14,6 +14,7 @@ angular.module('ouium')
     // Form data for the login view
     vm.login = function () {
       $ionicLoading.show({ hideOnStateChange: true });
+      vm.user.email = vm.user.email.toLowerCase();
       AuthService.login(vm.user).then(function () {
         $ionicHistory.goBack();
       }, function (err) {
@@ -45,6 +46,7 @@ angular.module('ouium')
     };
 
     vm.updateProfile = function (user) {
+      user=JSON.stringify(user).toLowerCase();
       UserService.updateUserProfile(user).then(function (msg) {
         $ionicPopup.alert({
           title: 'Profile updated!',
@@ -59,5 +61,4 @@ angular.module('ouium')
         });
       });
     }
-
   });

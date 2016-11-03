@@ -1,5 +1,5 @@
 angular.module('ouium')
-  .service('UserService', function ($q, $http, $rootScope) {
+  .service('UserService', function ($q, $http, $rootScope, $filter) {
     var USER_PROFILE = 'user_profile';
     var API_ENDPOINT = {
       url: 'http://ouium.herokuapp.com/user'
@@ -13,6 +13,10 @@ angular.module('ouium')
     }
 
     function useProfile(user) {
+      user.name = $filter('capitalize')(user.name);
+      user.lastname = $filter('capitalize')(user.lastname);
+      user.address.city = $filter('capitalize')(user.address.city);
+      user.address.country = $filter('capitalize')(user.address.country);
       $rootScope.user = user;
     }
 
@@ -59,9 +63,22 @@ angular.module('ouium')
       destroyUserProfile();
     };
 
+    var searchUsers = function (query) {
+      return $q(function (resolve, reject) {
+        $http.get(API_ENDPOINT.url + '/profile', query).then(function (result) {
+          if (result.data.success) {
+            resolve(result.data.results);
+          } else {
+            reject(result.data.msg);
+          }
+        });
+      });
+    };
+
     return {
       loadUserProfile: loadUserProfile,
       updateUserProfile: updateUserProfile,
-      clearUserProfile: clearUserProfile
+      clearUserProfile: clearUserProfile,
+      searchUsers: searchUsers
     }
   })
