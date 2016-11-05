@@ -1,14 +1,15 @@
 angular.module('ouium')
 
-  .controller('AuthController', function (AuthService, UserService, $state, $rootScope, $ionicPopup, $ionicHistory, $ionicLoading, $scope) {
+  .controller('AuthController', function (AuthService, $rootScope, $ionicPopup, $ionicHistory, $ionicLoading, $scope) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    $scope.$on('$ionicView.beforeEnter', function (e) {
-      vm.user = $rootScope.isAuthenticated ? $rootScope.user : {};
-    });
+    // $scope.$on('$ionicView.beforeEnter', function (e) {
+    //   vm.user = $rootScope.isAuthenticated ? $rootScope.user : {};
+    // });
+
     var vm = this;
 
     // Form data for the login view
@@ -44,21 +45,4 @@ angular.module('ouium')
         });
       });
     };
-
-    vm.updateProfile = function (user) {
-      user=JSON.stringify(user).toLowerCase();
-      UserService.updateUserProfile(user).then(function (msg) {
-        $ionicPopup.alert({
-          title: 'Profile updated!',
-          template: msg
-        }).then(function (res) {
-          $ionicHistory.goBack();
-        });
-      }, function (err) {
-        $ionicPopup.alert({
-          title: 'Profile update failed!',
-          template: err
-        });
-      });
-    }
   });

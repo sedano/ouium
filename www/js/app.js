@@ -80,8 +80,8 @@ angular.module('ouium', ['ionic'])
         views: {
           'menuContent': {
             templateUrl: 'templates/profile.html',
-            controller: 'AuthController',
-            controllerAs: 'AuthCtrl'
+            controller: 'ProfileController',
+            controllerAs: 'ProfileCtrl'
           }
         }
       });
