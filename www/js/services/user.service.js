@@ -13,10 +13,14 @@ angular.module('ouium')
     }
 
     function useProfile(user) {
+      var capitalizeList = ['name', 'lastname', 'street', 'city', 'country'];
       user.name = $filter('capitalize')(user.name);
       user.lastname = $filter('capitalize')(user.lastname);
-      user.address.city = $filter('capitalize')(user.address.city);
-      user.address.country = $filter('capitalize')(user.address.country);
+      if (user.hasOwnProperty('address')) {
+        user.address.street = $filter('capitalize')(user.address.street);
+        user.address.city = $filter('capitalize')(user.address.city);
+        user.address.country = $filter('capitalize')(user.address.country);
+      }
       $rootScope.user = user;
     }
 
@@ -35,7 +39,8 @@ angular.module('ouium')
           $http.get(API_ENDPOINT.url + '/profile').then(function (result) {
             if (result.data.success) {
               destroyUserProfile();
-              storeUserProfile(result.data.user)
+              console.log(result.data.user);
+              storeUserProfile(result.data.user);
               resolve(result.data.msg);
             } else {
               reject(result.data.msg);

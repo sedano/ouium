@@ -91,14 +91,14 @@ angular.module('ouium', ['ionic'])
 
   .filter('capitalize', function () {
     return function (input) {
-      if (isNaN(input)) {
+      if (input != undefined & isNaN(input)) {
         var splitInput = input.toLowerCase().split(' ');
         for (let i = 0; i < splitInput.length; i++) {
           splitInput[i] = splitInput[i].charAt(0).toUpperCase() + splitInput[i].substring(1);
         }
         return splitInput.join(' ');
       } else {
-        return input;
+        return "";
       }
     }
   });

@@ -1,6 +1,6 @@
 <ion-view view-title="Ouium">
   <ion-content padding="true">
-    <h3>Welcome <span ng-show="isAuthenticated">{{user.email}}</span></h3>
+    <h3>Welcome <span ng-show="isAuthenticated">{{user.name}}</span></h3>
     <p>Authenticated: {{isAuthenticated.toString() | uppercase}}</p>
     <div ng-hide="isAuthenticated">
       <button class="button button-block button-positive" ui-sref="app.login" ng-disabled="isAuthenticated">Login</button>
