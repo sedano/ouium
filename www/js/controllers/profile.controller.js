@@ -11,9 +11,30 @@ angular.module('ouium')
 
     var vm = this;
 
-    GeoService.getCurrentPosition().then(function (position) {
-      console.log(position);
-    })
+    // GeoService.getCurrentPosition().then(function (position) {
+    //   console.log(position);
+    // });
+
+    // GeoService.geocode({ address: "Senatorska 40, Warsaw, Poland" }).then(function (results) {
+    //   console.log(results);
+    // });
+
+    vm.geolocate = function () {
+      console.log("Start geolocation");
+      GeoService.getCurrentPosition().then(function (position) {
+        console.log(position);
+        GeoService.geocode({ location: position }).then(function (result) {
+          console.log(result);
+          vm.user.address = {};
+          vm.user.address.street = result.street;
+          vm.user.address.city = result.city;
+          vm.user.address.country = result.country;
+          vm.user.address.location = JSON.stringify(result.location.toJSON());
+        });
+      }, function (error) {
+        console.log(error);
+      });
+    }
 
     vm.updateProfile = function (user) {
       user = JSON.stringify(user).toLowerCase();

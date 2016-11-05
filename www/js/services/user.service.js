@@ -39,7 +39,6 @@ angular.module('ouium')
           $http.get(API_ENDPOINT.url + '/profile').then(function (result) {
             if (result.data.success) {
               destroyUserProfile();
-              console.log(result.data.user);
               storeUserProfile(result.data.user);
               resolve(result.data.msg);
             } else {
