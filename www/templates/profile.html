@@ -1,6 +1,6 @@
 <ion-view view-title="User profile">
 	<ion-content>
-		<form name="detailsForm" ng-submit="ProfileCtrl.updateProfile(ProfileCtrl.user)" novalidate>
+		<form name="ProfileCtrl.detailsForm" ng-submit="ProfileCtrl.updateProfile(ProfileCtrl.user)" novalidate>
 			<div class="list">
 				<div class="item item-divider">
 					Personal
@@ -22,7 +22,7 @@
 				</div>
 				<div class="item item-input item-button-right">
           <span class="input-label" required>Street</span>
-          <input type="text" ng-model="ProfileCtrl.user.address.street">
+          <input name="street" type="text" ng-model="ProfileCtrl.user.address.street">
 					<button type="button" class="button button-outlined" ng-click="ProfileCtrl.geolocate()"><i class="icon ion-pinpoint"></i></button>
         </div>
 				<label class="item item-input">
@@ -38,9 +38,8 @@
 				</div>
 				<ion-checkbox ng-model="ProfileCtrl.user.contractor">I want to offer my service</ion-checkbox>
 				<label class="item">
-          <button class="button button-block button-calm" ng-disabled="detailsForm.$invalid || !detailsForm.$dirty" type="submit">Save details</button>
+          <button class="button button-block button-calm" ng-disabled="ProfileCtrl.detailsForm.$invalid || !ProfileCtrl.detailsForm.$dirty" type="submit">Save details</button>
         </label>
-				{{detailsForm.$invalid}}
 			</div>
 		</form>
 	</ion-content>
