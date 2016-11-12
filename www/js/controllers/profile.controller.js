@@ -10,7 +10,7 @@ angular.module('ouium')
     });
 
     var vm = this;
-
+    
     // GeoService.getCurrentPosition().then(function (position) {
     //   console.log(position);
     // });
@@ -26,13 +26,17 @@ angular.module('ouium')
         GeoService.geocode({ location: position }).then(function (result) {
           console.log(result);
           vm.user.address = {};
+          vm.detailsForm.street.$setDirty();
           vm.user.address.street = result.street;
           vm.user.address.city = result.city;
           vm.user.address.country = result.country;
           vm.user.address.location = JSON.stringify(result.location.toJSON());
         });
       }, function (error) {
-        console.log(error);
+        $ionicPopup.alert({
+          title: 'Location service unavailable',
+          template: error.msg
+        });
       });
     }
 
