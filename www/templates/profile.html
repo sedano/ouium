@@ -1,6 +1,6 @@
 <ion-view view-title="User profile">
 	<ion-content>
-		<form name="ProfileCtrl.detailsForm" ng-submit="ProfileCtrl.updateProfile(ProfileCtrl.user)" novalidate>
+		<form name="ProfileCtrl.detailsForm" ng-submit="ProfileCtrl.updateProfile()" novalidate>
 			<div class="list">
 				<div class="item item-divider">
 					Personal
@@ -21,10 +21,10 @@
 					Location
 				</div>
 				<div class="item item-input item-button-right">
-          <span class="input-label" required>Street</span>
-          <input name="street" type="text" ng-model="ProfileCtrl.user.address.street">
+					<span class="input-label" required>Street</span>
+					<input name="street" type="text" ng-model="ProfileCtrl.user.address.street">
 					<button type="button" class="button button-outlined" ng-click="ProfileCtrl.geolocate()"><i class="icon ion-pinpoint"></i></button>
-        </div>
+				</div>
 				<label class="item item-input">
           <span class="input-label" required>City</span>
           <input type="text" ng-model="ProfileCtrl.user.address.city">

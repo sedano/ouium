@@ -10,27 +10,19 @@ angular.module('ouium')
     });
 
     var vm = this;
-    
-    // GeoService.getCurrentPosition().then(function (position) {
-    //   console.log(position);
-    // });
-
-    // GeoService.geocode({ address: "Senatorska 40, Warsaw, Poland" }).then(function (results) {
-    //   console.log(results);
-    // });
 
     vm.geolocate = function () {
-      console.log("Start geolocation");
       GeoService.getCurrentPosition().then(function (position) {
-        console.log(position);
         GeoService.geocode({ location: position }).then(function (result) {
-          console.log(result);
-          vm.user.address = {};
           vm.detailsForm.street.$setDirty();
+          vm.user.address = {};
           vm.user.address.street = result.street;
           vm.user.address.city = result.city;
           vm.user.address.country = result.country;
-          vm.user.address.location = JSON.stringify(result.location.toJSON());
+          vm.user.address.countryCode = result.countryCode;
+          vm.user.address.location = {};
+          vm.user.address.location.coordinates = result.coordinates;
+          console.log(vm.user);
         });
       }, function (error) {
         $ionicPopup.alert({
@@ -40,7 +32,11 @@ angular.module('ouium')
       });
     }
 
-    vm.updateProfile = function (user) {
+    vm.updateProfile = function () {
+      validateAddress(saveProfile);
+    }
+
+    var saveProfile = function (user) {
       user = JSON.stringify(user).toLowerCase();
       UserService.updateUserProfile(user).then(function (msg) {
         $ionicPopup.alert({
@@ -56,4 +52,27 @@ angular.module('ouium')
         });
       });
     }
+
+    function validateAddress(callback) {
+      GeoService.geocode({ address: `${vm.user.address.street},${vm.user.address.city},${vm.user.address.country}` }).then(function (result) {
+        $ionicPopup.confirm({
+          title: 'Address found',
+          template: `<h3>Please confirm your address</h3><p>Street: ${result.street}</p><p>City: ${result.city}</p><p>Country: ${result.country}</p>`
+        }).then(function (res) {
+          if (res) {
+            vm.user.address = {};
+            vm.user.address.location = {};
+            vm.user.address.street = result.street;
+            vm.user.address.city = result.city;
+            vm.user.address.country = result.country;
+            vm.user.address.countryCode = result.countryCode;
+            vm.user.address.coordinates = result.coordinates;
+            callback(vm.user)
+          } else {
+          }
+        });
+
+      });
+    }
+
   });
