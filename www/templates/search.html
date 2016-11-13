@@ -4,7 +4,7 @@
 			<form ng-submit="SearchCtrl.search()">
 				<label class="item item-input">
 				<i class="icon ion-search placeholder-icon"></i>
-				<input type="text" placeholder="Search" ng-model="SearchCtrl.query" ng-change="SearchCtrl.clear()">
+				<input type="text" placeholder="Search" ng-model="SearchCtrl.query" ng-value="SearchCtrl.user.location.coordinates" ng-change="SearchCtrl.clear()">
 				</label>
 			</form>
 		</div>
@@ -13,9 +13,9 @@
 				Search results
 			</div>
 			<ion-item collection-repeat="item in SearchCtrl.items" class="item-thumbnail-left">
-				<img ng-src="{{item.img}}">
-				<h2>{{item.title}}</h2>
-				<p>{{item.description}}</p>
+				<img src="https://placehold.it/100x100">
+				<h2>{{item.name}}</h2>
+				<p>{{item.location.coordinates}}</p>
 				<ion-option-button class="button-assertive" ng-click="SearchCtrl.delete(item)">
 					Delete
 				</ion-option-button>

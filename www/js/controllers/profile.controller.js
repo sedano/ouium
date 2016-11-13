@@ -6,7 +6,13 @@ angular.module('ouium')
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
     $scope.$on('$ionicView.beforeEnter', function (e) {
-      vm.user = $rootScope.isAuthenticated ? $rootScope.user : {};
+      if (angular.equals({}, $rootScope.user)) {
+        UserService.loadUserProfile().then(function (result) {
+          vm.user = $rootScope.user || {};
+        })
+      } else {
+        vm.user = $rootScope.isAuthenticated ? $rootScope.user : {};
+      }
     });
 
     var vm = this;
@@ -20,9 +26,8 @@ angular.module('ouium')
           vm.user.address.city = result.city;
           vm.user.address.country = result.country;
           vm.user.address.countryCode = result.countryCode;
-          vm.user.address.location = {};
-          vm.user.address.location.coordinates = result.coordinates;
-          console.log(vm.user);
+          vm.user.location = {};
+          vm.user.location.coordinates = result.coordinates;
         });
       }, function (error) {
         $ionicPopup.alert({
@@ -36,8 +41,8 @@ angular.module('ouium')
       validateAddress(saveProfile);
     }
 
-    var saveProfile = function (user) {
-      user = JSON.stringify(user).toLowerCase();
+    var saveProfile = function (profile) {
+      var user = JSON.stringify(profile).toLowerCase();
       UserService.updateUserProfile(user).then(function (msg) {
         $ionicPopup.alert({
           title: 'Profile updated!',
@@ -66,7 +71,8 @@ angular.module('ouium')
             vm.user.address.city = result.city;
             vm.user.address.country = result.country;
             vm.user.address.countryCode = result.countryCode;
-            vm.user.address.coordinates = result.coordinates;
+            vm.user.location = {};
+            vm.user.location.coordinates = result.coordinates;
             callback(vm.user)
           } else {
           }

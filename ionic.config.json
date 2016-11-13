@@ -9,6 +9,10 @@
     {
       "path":"/user",
       "proxyUrl":"http://localhost:5858/user"
+    },
+    {
+      "path":"/search",
+      "proxyUrl":"http://localhost:5858/search"
     }
   ]
 }
