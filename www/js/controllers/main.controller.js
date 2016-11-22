@@ -23,7 +23,7 @@ angular.module('ouium')
       $state.go(state);
     };
 
-    $ionicModal.fromTemplateUrl('/templates/login.html', {
+    $ionicModal.fromTemplateUrl('templates/login.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {
