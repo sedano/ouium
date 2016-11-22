@@ -21,8 +21,14 @@
 				<ion-item menu-close ui-sref="app.main">
 					Home
 				</ion-item>
-				<ion-item menu-close ui-sref="app.search">
-					Search
+				<ion-item menu-close ng-click="MainCtrl.login()" ng-show="!isAuthenticated">
+					Login
+				</ion-item>
+				<ion-item menu-close ng-click="MainCtrl.go('app.profile')" ng-show="isAuthenticated">
+					Profile
+				</ion-item>
+				<ion-item menu-close ng-click="MainCtrl.logout()" ng-show="isAuthenticated">
+					Logout
 				</ion-item>
 			</ion-list>
 		</ion-content>

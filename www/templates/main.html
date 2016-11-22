@@ -2,14 +2,6 @@
   <ion-content padding="true">
     <h3>Welcome <span ng-show="isAuthenticated">{{user.name}}</span></h3>
     <p>Authenticated: {{isAuthenticated.toString() | uppercase}}</p>
-    <div ng-hide="isAuthenticated">
-      <button class="button button-block button-positive" ui-sref="app.login" ng-disabled="isAuthenticated">Login</button>
-      <button class="button button-block button-calm" ui-sref="app.signup" ng-disabled="isAuthenticated">Sign Up</button>
-    </div>
-    <div ng-show="isAuthenticated">
-      <button class="button button-block button-royal" ui-sref="app.search" ng-disabled="!isAuthenticated">Search</button>
-      <button class="button button-block button-balanced" ui-sref="app.profile" ng-disabled="!isAuthenticated">Profile</button>
-      <button class="button button-block button-assertive" ng-click="MainCtrl.logout()" ng-disabled="!isAuthenticated">Logout</button>
-    </div>
+      <button class="button button-block button-positive" ui-sref="app.search" ng-disabled="!isAuthenticated">Search</button>
   </ion-content>
 </ion-view>
