@@ -1,6 +1,6 @@
 angular.module('ouium')
 
-  .controller('AuthController', function (AuthService, $rootScope, $ionicPopup, $ionicHistory, $ionicLoading, $scope) {
+  .controller('AuthController', function (AuthService, $ionicPopup, $ionicLoading, $state) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -14,10 +14,11 @@ angular.module('ouium')
 
     // Form data for the login view
     vm.login = function () {
-      $ionicLoading.show({ hideOnStateChange: true });
+      $ionicLoading.show({ hideOnStateChange: true});
       vm.user.email = vm.user.email.toLowerCase();
       AuthService.login(vm.user).then(function () {
-        $ionicHistory.goBack();
+        vm.closeLogin();
+        $state.go('app.main', {}, {reload:true})
       }, function (err) {
         $ionicLoading.hide();
         $ionicPopup.alert({

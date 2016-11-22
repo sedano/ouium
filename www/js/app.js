@@ -42,17 +42,6 @@ angular.module('ouium', ['ionic'])
         }
       })
 
-      .state('app.login', {
-        url: '/login',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/login.html',
-            controller: 'AuthController',
-            controllerAs: 'AuthCtrl'
-          }
-        }
-      })
-
       .state('app.signup', {
         url: '/signup',
         views: {
