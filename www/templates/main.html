@@ -2,6 +2,7 @@
   <ion-content padding="true">
     <h3>Welcome <span ng-show="isAuthenticated">{{user.name}}</span></h3>
     <p>Authenticated: {{isAuthenticated.toString() | uppercase}}</p>
-      <button class="button button-block button-positive" ui-sref="app.search" ng-disabled="!isAuthenticated">Search</button>
+      <button class="button button-block button-positive" ui-sref="app.search">Search</button>
+      <button class="button button-block button-assertive" ng-disabled="true">Offer my service</button>
   </ion-content>
 </ion-view>

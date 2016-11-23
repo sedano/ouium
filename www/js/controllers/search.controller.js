@@ -19,24 +19,52 @@ angular.module('ouium')
     vm.items = [];
 
     vm.search = function () {
-      console.log("Searching")
+      if (vm.coordinates) {
+        console.log("Coordinates found: ", vm.coordinates);
+        searchServer(vm.coordinates, vm.distance);
+      } else {
+        console.log("Coordinates not found");
+        GeoService.geocode({ address: vm.address }).then(function (result) {
+          vm.coordinates = result.coordinates;
+          console.log("New coordinates: ", vm.coordinates);
+          searchServer(vm.coordinates, vm.distance)
+        });
+      }
+    };
+
+    function searchServer(coordinates, distance) {
       SearchService.searchNear({
-        maxDistance: 5000,
-        coordinates: vm.user.location.coordinates
+        maxDistance: distance || 5000,
+        coordinates: coordinates || [0, 0]
       }).then(function (result) {
         console.log(result)
         vm.items = result;
       }, function (error) {
         console.log(error)
       })
+    }
 
-    };
+    vm.geolocate = function () {
+      GeoService.getCurrentPosition().then(function (position) {
+        GeoService.geocode({ location: position }).then(function (result) {
+          vm.address = result.formatted_address;
+          vm.coordinates = result.coordinates;
+          vm.search();
+        });
+      }, function (error) {
+        $ionicPopup.alert({
+          title: 'Location service unavailable',
+          template: error.msg
+        });
+      });
+    }
 
     vm.clear = function () {
       if (vm.items.length) {
         console.log("Clearing")
         vm.items = [];
       }
+      vm.coordinates = null;
     };
 
   })
