@@ -13,12 +13,13 @@ angular.module('ouium')
     var vm = this;
 
     // Form data for the login view
-    vm.login = function () {
-      $ionicLoading.show({ hideOnStateChange: true});
+    vm.login = function (popup) {
+      $ionicLoading.show({ hideOnStateChange: true });
       vm.user.email = vm.user.email.toLowerCase();
       AuthService.login(vm.user).then(function () {
-        vm.closeLogin();
-        $state.go('app.main', {}, {reload:true})
+        if (popup)
+          vm.closeLogin();
+        $state.go('app.main', {}, { reload: true })
       }, function (err) {
         $ionicLoading.hide();
         $ionicPopup.alert({
@@ -40,6 +41,8 @@ angular.module('ouium')
           vm.login()
         });
       }, function (err) {
+        $ionicLoading.hide();
+        vm.user = null;
         $ionicPopup.alert({
           title: 'Sign up failed!',
           template: err

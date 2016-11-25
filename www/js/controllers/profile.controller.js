@@ -42,8 +42,10 @@ angular.module('ouium')
     }
 
     var saveProfile = function (profile) {
+      $ionicLoading.show();
       var user = JSON.stringify(profile).toLowerCase();
       UserService.updateUserProfile(user).then(function (msg) {
+        $ionicLoading.hide();
         $ionicPopup.alert({
           title: 'Profile updated!',
           template: msg
@@ -51,6 +53,7 @@ angular.module('ouium')
           $ionicHistory.goBack();
         });
       }, function (err) {
+        $ionicLoading.hide();
         $ionicPopup.alert({
           title: 'Profile update failed!',
           template: err
