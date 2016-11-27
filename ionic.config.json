@@ -4,15 +4,15 @@
   "proxies": [
     {
       "path": "/auth",
-      "proxyUrl": "http://localhost:5858/auth"
+      "proxyUrl": "http://ouium.herokuapp.com/auth"
     },
     {
       "path":"/user",
-      "proxyUrl":"http://localhost:5858/user"
+      "proxyUrl":"http://ouium.herokuapp.com/user"
     },
     {
       "path":"/search",
-      "proxyUrl":"http://localhost:5858/search"
+      "proxyUrl":"http://ouium.herokuapp.com/search"
     }
   ]
 }
