@@ -5,9 +5,10 @@ angular.module('ouium')
       // url: 'http://localhost:8100/search'
     }
 
-    var searchNear = function (query) {
+    var searchNear = function (query, auth) {
+      var route = auth ? "/auth" : "/";
       return $q(function (resolve, reject) {
-        $http.post(API_ENDPOINT.url + '/', query).then(function (result) {
+        $http.post(API_ENDPOINT.url + route, query).then(function (result) {
           if (result.data.success) {
             resolve(result.data.results);
           } else {
