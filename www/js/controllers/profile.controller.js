@@ -5,7 +5,7 @@ angular.module('ouium')
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    $scope.$on('$ionicView.beforeEnter', function (e) {
+    $scope.$on('$ionicView.enter', function (e) {
       if (angular.equals({}, $rootScope.user)) {
         UserService.loadUserProfile().then(function (result) {
           vm.user = $rootScope.user || {};
@@ -50,7 +50,12 @@ angular.module('ouium')
           title: 'Profile updated!',
           template: msg
         }).then(function (res) {
-          $ionicHistory.goBack();
+          console.log($ionicHistory.backView());
+          if ($ionicHistory.backView().stateId == 'app.profile') {
+            $ionicHistory.goBack(-2);
+          } else {
+            $ionicHistory.goBack();
+          }
         });
       }, function (err) {
         $ionicLoading.hide();
