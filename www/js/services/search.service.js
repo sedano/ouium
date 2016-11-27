@@ -1,8 +1,7 @@
 angular.module('ouium')
   .service('SearchService', function ($q, $http) {
     var API_ENDPOINT = {
-      url: 'http://ouium.herokuapp.com/search'
-      // url: 'http://localhost:8100/search'
+      url: LOCAL_DEV?'http://localhost:8100/search':'https://ouium.herokuapp.com/search'
     }
 
     var searchNear = function (query, auth) {
