@@ -14,28 +14,9 @@ angular.module('ouium')
         vm.user = $rootScope.isAuthenticated ? $rootScope.user : {};
       }
     });
-    $scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
-      // data.slider is the instance of Swiper
-      $scope.slider = data.slider;
-    });
-
-    $scope.$on("$ionicSlides.slideChangeStart", function (event, data) {
-      console.log('Slide change is beginning');
-    });
-
-    $scope.$on("$ionicSlides.slideChangeEnd", function (event, data) {
-      // note: the indexes are 0-based
-      $scope.activeIndex = data.slider.activeIndex;
-      $scope.previousIndex = data.slider.previousIndex;
-    });
 
     var vm = this;
     vm.items = [];
-    vm.slidesOptions = {
-      loop: false,
-      effect: 'slide',
-      speed: 500,
-    }
 
     vm.search = function () {
       if (vm.coordinates) {
