@@ -1,6 +1,6 @@
 angular.module('ouium')
 
-  .controller('SearchController', function (SearchService, GeoService, UserService, $rootScope, $scope) {
+  .controller('SearchController', function (SearchService, GeoService, UserService, $rootScope, $scope, $ionicModal) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -66,5 +66,51 @@ angular.module('ouium')
       }
       vm.coordinates = null;
     };
+
+    //Google Maps modal
+    // var latLng = new google.maps.LatLng(0,0);
+
+    $ionicModal.fromTemplateUrl('templates/map.html', {
+      scope: $scope,
+      animation: 'slide-in-right'
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
+
+    vm.openMap = function () {
+      $scope.modal.show();
+      latLng = getMapLatLng(vm.coordinates);
+      if (vm.map) {
+        vm.map.setCenter(latLng)
+      } else {
+        var mapOptions = {
+          center: latLng,
+          zoom: 12
+        };
+        vm.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      }
+    }
+    vm.closeMap = function () {
+      $scope.modal.hide();
+    };
+    // Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function () {
+      $scope.modal.remove();
+    });
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function () {
+      // Execute action
+    });
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function () {
+      // Execute action
+    });
+
+    function getMapLatLng(array) {
+      return {
+        lat: array[0],
+        lng: array[1]
+      }
+    }
 
   })

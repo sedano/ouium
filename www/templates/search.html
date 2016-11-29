@@ -7,7 +7,11 @@
 				<input type="text" placeholder="Search" ng-model="SearchCtrl.address" ng-value="SearchCtrl.address" ng-change="SearchCtrl.clear()">
 				</label>
 			</form>
-				<button type="button" class="button button-block button-assertive" ng-click="SearchCtrl.geolocate()"><i class="icon ion-pinpoint"></i></button>
+			<div class="item">
+				<button class="button button-positive" ng-click="SearchCtrl.search()"><i class="icon ion-search"></i></button>
+				<button class="button button-assertive" ng-click="SearchCtrl.geolocate()"><i class="icon ion-pinpoint"></i></button>
+				<button class="button button-balanced" ng-click="SearchCtrl.openMap()" ng-disabled="!SearchCtrl.coordinates"><i class="icon ion-map"></i></button>
+			</div>
 		</div>
 		<ion-list>
 			<div class="item item-divider">
