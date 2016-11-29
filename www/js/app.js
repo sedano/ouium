@@ -4,6 +4,7 @@
 // 'ouium' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'ouium.controllers' is found in controllers.js
+const LOCAL_DEV = false;
 angular.module('ouium', ['ionic'])
 
   .run(function ($ionicPlatform) {

@@ -36,7 +36,7 @@ angular.module('ouium')
       SearchService.searchNear({
         maxDistance: distance || 5000,
         coordinates: coordinates || [0, 0]
-      }).then(function (result) {
+      }, $rootScope.isAuthenticated).then(function (result) {
         console.log(result)
         vm.items = result;
       }, function (error) {
