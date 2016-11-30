@@ -5,18 +5,30 @@ angular.module('ouium')
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    $scope.$on('$ionicView.beforeEnter', function (e) {
+    $scope.$on('$ionicView.enter', function (e) {
       if (angular.equals({}, $rootScope.user)) {
         UserService.loadUserProfile().then(function (result) {
           vm.user = $rootScope.user || {};
+          loadUserLocation(vm.user);
         })
       } else {
         vm.user = $rootScope.isAuthenticated ? $rootScope.user : {};
+        loadUserLocation(vm.user);
       }
     });
 
     var vm = this;
     vm.items = [];
+
+    function loadUserLocation(user) {
+      if (user) {
+        vm.address = `${user.address.city}, ${user.address.country}`;
+        vm.coordinates = user.location.coordinates;
+      } else {
+        vm.address = "";
+        vm.coordinates = undefined;
+      }
+    }
 
     vm.search = function () {
       if (vm.coordinates) {
@@ -80,17 +92,20 @@ angular.module('ouium')
 
     vm.openMap = function () {
       $scope.modal.show();
+      console.log(vm.coordinates);
       latLng = getMapLatLng(vm.coordinates);
       if (vm.map) {
         vm.map.setCenter(latLng)
       } else {
         var mapOptions = {
           center: latLng,
-          zoom: 12
+          zoom: 12,
+          maxZoom: 18
         };
         vm.map = new google.maps.Map(document.getElementById("map"), mapOptions);
       }
-      MapService.addMarkers(vm.items,vm.map)
+      MapService.addMarker(vm.coordinates, vm.map)
+      MapService.addMarkers(vm.items, vm.map)
     }
 
     vm.closeMap = function () {
