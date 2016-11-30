@@ -8,6 +8,15 @@
 				</label>
 			</form>
 			<div class="item">
+				<label> Distance:
+				<select name="singleSelect" ng-model="SearchCtrl.distance">
+					<option value="1000">1km</option>
+					<option value="5000" ng-selected="true">5km</option>
+					<option value="10000">10km</option>
+					<option value="50000">50km</option>
+					<option value="100000">100km</option>
+				</select>
+				</label>
 				<button class="button button-positive" ng-click="SearchCtrl.search()"><i class="icon ion-search"></i></button>
 				<button class="button button-assertive" ng-click="SearchCtrl.geolocate()"><i class="icon ion-pinpoint"></i></button>
 				<button class="button button-balanced" ng-click="SearchCtrl.openMap()" ng-disabled="!SearchCtrl.coordinates"><i class="icon ion-map"></i></button>

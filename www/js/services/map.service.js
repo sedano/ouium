@@ -30,6 +30,19 @@ angular.module('ouium')
             markers.push(marker);
         }
 
+        // Adds a marker to the map and push to the array.
+        var addMyMarker = function (location, map) {
+            latLng = getMapLatLng(location);
+            bounds.extend(latLng);
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                icon: {
+                    image: "https://onamis.eu/img/marker.png"
+                },
+            });
+        }
+
         // Sets the map on all markers in the array.
         function setMapOnAll(map) {
             for (var i = 0; i < markers.length; i++) {
@@ -56,6 +69,7 @@ angular.module('ouium')
         return {
             addMarkers: addMarkers,
             addMarker: addMarker,
+            addMyMarker: addMyMarker,
             deleteMarkers: deleteMarkers
         };
     })

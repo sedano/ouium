@@ -104,7 +104,7 @@ angular.module('ouium')
         };
         vm.map = new google.maps.Map(document.getElementById("map"), mapOptions);
       }
-      MapService.addMarker(vm.coordinates, vm.map)
+      MapService.addMyMarker(vm.coordinates, vm.map)
       MapService.addMarkers(vm.items, vm.map)
     }
 
