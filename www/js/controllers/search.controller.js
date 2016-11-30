@@ -1,6 +1,6 @@
 angular.module('ouium')
 
-  .controller('SearchController', function (SearchService, GeoService, UserService, $rootScope, $scope, $ionicModal) {
+  .controller('SearchController', function (SearchService, GeoService, UserService, MapService, $rootScope, $scope, $ionicModal) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -64,7 +64,8 @@ angular.module('ouium')
         console.log("Clearing")
         vm.items = [];
       }
-      vm.coordinates = null;
+      vm.coordinates = undefined;
+      MapService.deleteMarkers();
     };
 
     //Google Maps modal
@@ -89,7 +90,9 @@ angular.module('ouium')
         };
         vm.map = new google.maps.Map(document.getElementById("map"), mapOptions);
       }
+      MapService.addMarkers(vm.items,vm.map)
     }
+
     vm.closeMap = function () {
       $scope.modal.hide();
     };
