@@ -13,6 +13,7 @@ angular.module('ouium')
     var vm = this;
     vm.logout = function () {
       AuthService.logout();
+      vm.go('app.main')
     };
 
     vm.login = function () {
