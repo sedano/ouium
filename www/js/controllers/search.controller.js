@@ -1,6 +1,6 @@
 angular.module('ouium')
 
-  .controller('SearchController', function (SearchService, GeoService, UserService, MapService, $rootScope, $scope, $ionicModal) {
+  .controller('SearchController', function (SearchService, GeoService, UserService, MapService, $rootScope, $scope, $ionicModal, $ionicLoading, $ionicPopup) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -19,6 +19,7 @@ angular.module('ouium')
 
     var vm = this;
     vm.items = [];
+    vm.clean = true;
 
     function loadUserLocation(user) {
       if (user) {
@@ -31,6 +32,7 @@ angular.module('ouium')
     }
 
     vm.search = function () {
+      $ionicLoading.show({ delay: 100 });
       if (vm.coordinates) {
         console.log("Coordinates found: ", vm.coordinates);
         searchServer(vm.coordinates, vm.distance);
@@ -40,7 +42,7 @@ angular.module('ouium')
           vm.coordinates = result.coordinates;
           console.log("New coordinates: ", vm.coordinates);
           searchServer(vm.coordinates, vm.distance)
-        });
+        }, errorCallback);
       }
     };
 
@@ -50,20 +52,23 @@ angular.module('ouium')
         coordinates: coordinates || [0, 0]
       }, $rootScope.isAuthenticated).then(function (result) {
         console.log(result)
+        $ionicLoading.hide();
+        vm.clean = false;
         vm.items = result;
-      }, function (error) {
-        console.log(error)
-      })
+      }, errorCallback)
     }
 
     vm.geolocate = function () {
+      $ionicLoading.show({ delay: 100 });
       GeoService.getCurrentPosition().then(function (position) {
         GeoService.geocode({ location: position }).then(function (result) {
+          vm.clear();
           vm.address = result.formatted_address;
           vm.coordinates = result.coordinates;
           vm.search();
-        });
+        }, errorCallback);
       }, function (error) {
+        $ionicLoading.hide();
         $ionicPopup.alert({
           title: 'Location service unavailable',
           template: error.msg
@@ -71,11 +76,18 @@ angular.module('ouium')
       });
     }
 
+    var errorCallback = function (error) {
+      $ionicLoading.hide();
+      vm.clean = false;
+    }
+
+
     vm.clear = function () {
       if (vm.items.length) {
         console.log("Clearing")
         vm.items = [];
       }
+      vm.clean = true;
       vm.coordinates = undefined;
       MapService.deleteMarkers();
     };

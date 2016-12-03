@@ -13,6 +13,8 @@ angular.module('ouium')
           } else {
             reject(result.data.msg);
           }
+        }, function(error){
+          reject();
         });
       });
     };

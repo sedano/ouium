@@ -26,9 +26,10 @@
 			<div class="item item-divider">
 				<span>{{isAuthenticated?"Private":"Public"}}<span> Search results
 			</div>
+			<ion-item ng-show="SearchCtrl.items.length==0 && !SearchCtrl.clean">No results found</ion-item>
 			<ion-item collection-repeat="item in SearchCtrl.items" class="item-thumbnail-left">
 				<img src="https://placehold.it/100x100">
-				<h2>{{item.name}}</h2>
+				<h2>{{item.name + " " + item.lastname | capitalize}}</h2>
 				<p>{{item.location.coordinates}}</p>
 				<a>{{item.email}}</a>
 				<ion-option-button class="button-assertive" ng-click="SearchCtrl.delete(item)">
