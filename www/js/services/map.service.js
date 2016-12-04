@@ -64,8 +64,8 @@ angular.module('ouium')
 
         function getMapLatLng(array) {
             return {
-                lat: array[0],
-                lng: array[1]
+                lng: array[0],
+                lat: array[1]
             }
         }
         return {

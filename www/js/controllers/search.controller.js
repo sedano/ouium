@@ -22,13 +22,17 @@ angular.module('ouium')
     vm.clean = true;
 
     function loadUserLocation(user) {
-      if (user) {
-        vm.address = `${user.address.city}, ${user.address.country}`;
+      if (!angular.equals({}, $rootScope.user)) {
+        vm.address = `${user.address.street}, ${user.address.city}, ${user.address.country}`;
         vm.coordinates = user.location.coordinates;
       } else {
         vm.address = "";
         vm.coordinates = undefined;
       }
+    }
+
+    vm.setHome =  function(){
+      loadUserLocation(vm.user);
     }
 
     vm.search = function () {
@@ -47,11 +51,7 @@ angular.module('ouium')
     };
 
     function searchServer(coordinates, distance) {
-      SearchService.searchNear({
-        maxDistance: distance || 5000,
-        coordinates: coordinates || [0, 0]
-      }, $rootScope.isAuthenticated).then(function (result) {
-        console.log(result)
+      SearchService.searchNear(coordinates, distance, $rootScope.isAuthenticated).then(function (result) {
         $ionicLoading.hide();
         vm.clean = false;
         vm.items = result;
@@ -104,7 +104,6 @@ angular.module('ouium')
 
     vm.openMap = function () {
       $scope.modal.show();
-      console.log(vm.coordinates);
       latLng = getMapLatLng(vm.coordinates);
       if (vm.map) {
         vm.map.setCenter(latLng)

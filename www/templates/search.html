@@ -17,6 +17,7 @@
 					<option value="100000">100km</option>
 				</select>
 				</label>
+				<button class="button button-calm" ng-show="isAuthenticated" ng-click="SearchCtrl.setHome()"><i class="icon ion-home"></i></button>
 				<button class="button button-positive" ng-click="SearchCtrl.search()"><i class="icon ion-search"></i></button>
 				<button class="button button-assertive" ng-click="SearchCtrl.geolocate()"><i class="icon ion-pinpoint"></i></button>
 				<button class="button button-balanced" ng-click="SearchCtrl.openMap()" ng-disabled="!SearchCtrl.coordinates"><i class="icon ion-map"></i></button>
