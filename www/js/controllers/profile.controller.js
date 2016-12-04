@@ -51,7 +51,7 @@ angular.module('ouium')
           template: msg
         }).then(function (res) {
           console.log($ionicHistory.backView());
-          if ($ionicHistory.backView().stateId == 'app.profile') {
+          if ($ionicHistory.backView().stateId == 'app.signup') {
             $ionicHistory.goBack(-2);
           } else {
             $ionicHistory.goBack();
