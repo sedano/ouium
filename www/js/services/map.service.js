@@ -8,8 +8,6 @@ angular.module('ouium')
             for (let i = 0, len = items.length; i < len; i++) {
                 addMarker(items[i].location.coordinates, map);
             }
-            map.fitBounds(bounds);
-            map.panToBounds(bounds);
         }
 
         // Deletes all markers in the array by removing references to them.
@@ -37,12 +35,14 @@ angular.module('ouium')
         };
         var addMyMarker = function (location, map) {
             latLng = getMapLatLng(location);
-            bounds.extend(latLng);
             var marker = new google.maps.Marker({
                 position: latLng,
                 map: map,
                 icon: image
             });
+            bounds.extend(latLng);
+            map.fitBounds(bounds);
+            map.panTo(latLng);
         }
 
         // Sets the map on all markers in the array.

@@ -25,13 +25,14 @@ angular.module('ouium')
       if (!angular.equals({}, $rootScope.user)) {
         vm.address = `${user.address.street}, ${user.address.city}, ${user.address.country}`;
         vm.coordinates = user.location.coordinates;
+        vm.search();
       } else {
         vm.address = "";
         vm.coordinates = undefined;
       }
     }
 
-    vm.setHome =  function(){
+    vm.setHome = function () {
       loadUserLocation(vm.user);
     }
 
@@ -115,8 +116,11 @@ angular.module('ouium')
         };
         vm.map = new google.maps.Map(document.getElementById("map"), mapOptions);
       }
+      if (vm.items.length > 0) {
+      console.log(vm.items.length)
+        MapService.addMarkers(vm.items, vm.map)
+      }
       MapService.addMyMarker(vm.coordinates, vm.map)
-      MapService.addMarkers(vm.items, vm.map)
     }
 
     vm.closeMap = function () {
