@@ -106,9 +106,7 @@ angular.module('ouium')
     vm.openMap = function () {
       $scope.modal.show();
       latLng = getMapLatLng(vm.coordinates);
-      if (vm.map) {
-        vm.map.setCenter(latLng)
-      } else {
+      if (!vm.map) {
         var mapOptions = {
           center: latLng,
           zoom: 12,
@@ -116,8 +114,8 @@ angular.module('ouium')
         };
         vm.map = new google.maps.Map(document.getElementById("map"), mapOptions);
       }
+      MapService.deleteMarkers();
       if (vm.items.length > 0) {
-      console.log(vm.items.length)
         MapService.addMarkers(vm.items, vm.map)
       }
       MapService.addMyMarker(vm.coordinates, vm.map)

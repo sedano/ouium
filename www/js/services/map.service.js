@@ -29,13 +29,14 @@ angular.module('ouium')
         }
 
         // Adds a marker to the map and push to the array.
+        var myMarker = new google.maps.Marker();
         var image = {
             url: 'https://onamis.eu/img/marker.png',
             scaledSize: new google.maps.Size(30, 30),
         };
         var addMyMarker = function (location, map) {
             latLng = getMapLatLng(location);
-            var marker = new google.maps.Marker({
+            myMarker = new google.maps.Marker({
                 position: latLng,
                 map: map,
                 icon: image
@@ -50,6 +51,7 @@ angular.module('ouium')
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(map);
             }
+            myMarker.setMap(map);
         }
 
         // Removes the markers from the map, but keeps them in the array.
